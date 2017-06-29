@@ -1,0 +1,19 @@
+{
+  "name": "zongphp/page",
+  "description": "分页组件",
+  "type": "project",
+  "keywords": [
+    "page"
+  ],
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "files": [],
+    "psr-4": {
+      "zongphp\\page\\": "src"
+    }
+  }
+}
