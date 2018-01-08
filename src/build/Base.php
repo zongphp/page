@@ -71,7 +71,7 @@ class Base {
 	 */
 	public function show() {
 		if ( $this->totalPage > 1 ) {
-			return '<nav><ul class="pagination">' . $this->pre() . $this->strList() . $this->next() . '</ul></nav>';
+			return '<div class="layui-box layui-laypage layui-laypage-default">' . $this->pre() . $this->strList() . $this->next() . '</div>';
 		} else {
 			return '';
 		}
@@ -182,20 +182,20 @@ class Base {
 	//上一页
 	public function pre() {
 		if ( $this->selfPage > 1 && $this->selfPage <= $this->totalPage ) {
-			return "<li><a href='" . $this->getUrl( $this->selfPage - 1 ) . "' class='pre'>{$this->desc['pre']}</a></li>";
+			return "<a href='" . $this->getUrl( $this->selfPage - 1 ) . "' class='layui-laypage-prev'>{$this->desc['pre']}</a>";
 		}
 
-		return $this->totalPage ? "<li class='disabled'><span>{$this->desc['pre']}</span></li>" : '';
+		return $this->totalPage ? "<a class='layui-laypage-prev layui-disabled'>{$this->desc['pre']}</a>" : '';
 	}
 
 	//下一页
 	public function next() {
 		$next = $this->desc['next'];
 		if ( $this->selfPage < $this->totalPage ) {
-			return "<li><a href='" . $this->getUrl( $this->selfPage + 1 ) . "' class='next'>{$next}</a></li>";
+			return "<a href='" . $this->getUrl( $this->selfPage + 1 ) . "' class='layui-laypage-next'>{$next}</a>";
 		}
 
-		return $this->totalPage ? "<li class='disabled'><span>{$next}</span></li>" : '';
+		return $this->totalPage ? "<a class='layui-laypage-next layui-disabled'>{$next}</a>" : '';
 	}
 
 	//列表项
@@ -227,7 +227,7 @@ class Base {
 
 		$str = '';
 		foreach ( $arr as $v ) {
-			$str .= empty( $v['url'] ) ? "<li class='active'><a href='{$v['url']}'>{$v['str']}</a></li>" : "<li><a href='{$v['url']}'>{$v['str']}</a></li>";
+			$str .= empty( $v['url'] ) ? "<span class='layui-laypage-curr'><em class='layui-laypage-em'></em><em>{$v['str']}</em></span>" : "<a href='{$v['url']}'>{$v['str']}</a>";
 		}
 
 		return $str;
