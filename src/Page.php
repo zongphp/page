@@ -1,37 +1,32 @@
 <?php
 namespace zongphp\page;
 
-use zongphp\config\Config;
 use zongphp\page\build\Base;
 
-class Page {
-	protected $link = null;
+class Page
+{
+    protected static $link = null;
 
-	//更改缓存驱动
-	public function driver() {
-		$this->link = new Base();
-		return $this;
-	}
+    public static function single()
+    {
+        if (is_null(self::$link)) {
+            self::$link = new Base();
+        }
 
-	public function __call( $method, $params ) {
-		if ( is_null( $this->link ) ) {
-			$this->driver();
-		}
+        return self::$link;
+    }
 
-		return call_user_func_array( [ $this->link, $method ], $params );
-	}
+    public function __call($method, $params)
+    {
+        return call_user_func_array([self::single(), $method], $params);
+    }
+    public function __toString()
+    {
+        return self::$link->__toString();
+    }
 
-	//生成单例对象
-	public static function single() {
-		static $link;
-		if ( is_null( $link ) ) {
-			$link = new static();
-		}
-
-		return $link;
-	}
-
-	public static function __callStatic( $name, $arguments ) {
-		return call_user_func_array( [ static::single(), $name ], $arguments );
-	}
+    public static function __callStatic($name, $arguments)
+    {
+        return call_user_func_array([self::single(), $name], $arguments);
+    }
 }
