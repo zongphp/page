@@ -102,6 +102,11 @@ class Base {
 		$this->selfPage = min( $this->totalPage, $self );
 	}
 
+	//获取当前页
+	public function getSelfPage(){
+		return $this->selfPage;
+	}
+
 	//获取总页数
 	private function totalPage() {
 		return $this->totalPage = ceil( $this->totalRow / $this->row );
@@ -118,7 +123,8 @@ class Base {
 		if ( $this->url ) {
 			return;
 		}
-
+		$routeInfo = Route::getMatchRoute();
+		unset($_GET['s']);
 		$url = '';
 		foreach ( (array) $_GET as $k => $v ) {
 			if ( $k != 'page' ) {
@@ -126,7 +132,7 @@ class Base {
 			}
 		}
 
-		return $this->url = "?{$url}page={page}";
+		return $this->url = "#{$routeInfo['route']}?{$url}page={page}";
 	}
 
 	//获取URL地址
